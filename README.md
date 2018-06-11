@@ -3,7 +3,7 @@
 > #### [Máster en Ingeniería Web por la Universidad Politécnica de Madrid (miw-upm)](http://miw.etsisi.upm.es)
 > #### Asignatura: *Arquitectura y Patrones para Aplicaciones Web*
 
-[![Build Status](https://travis-ci.org/miw-upm/betca-themes-layers.svg?branch=develop)](https://travis-ci.org/miw-upm/betca-themes-layers)
+[![Build Status](https://travis-ci.org/miw-upm/APAW-themes-layers.svg?branch=develop)](https://travis-ci.org/miw-upm/APAW-themes-layers)
 
 ## Tecnologías necesarias
 * Java
