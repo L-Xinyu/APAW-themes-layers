@@ -3,6 +3,7 @@ package api;
 import api.apiControllers.UserApiController;
 import api.dtos.UserDto;
 import api.exceptions.ArgumentNotValidException;
+import api.exceptions.NotFoundException;
 import api.exceptions.RequestInvalidException;
 import http.HttpRequest;
 import http.HttpResponse;
@@ -22,7 +23,8 @@ public class Dispatcher {
                 case GET:
                     throw new RequestInvalidException("request error: " + request.getMethod() + ' ' + request.getPath());
                 case PUT:
-                    throw new RequestInvalidException("request error: " + request.getMethod() + ' ' + request.getPath());
+                    this.doPut(request);
+                    break;
                 case PATCH:
                     throw new RequestInvalidException("request error: " + request.getMethod() + ' ' + request.getPath());
                 case DELETE:
@@ -33,6 +35,9 @@ public class Dispatcher {
         } catch (ArgumentNotValidException | RequestInvalidException exception) {
             response.setBody(String.format(ERROR_MESSAGE, exception.getMessage()));
             response.setStatus(HttpStatus.BAD_REQUEST);
+        } catch (NotFoundException exception) {
+            response.setBody(String.format(ERROR_MESSAGE, exception.getMessage()));
+            response.setStatus(HttpStatus.NOT_FOUND);
         } catch (Exception exception) {  // Unexpected
             exception.printStackTrace();
             response.setBody(String.format(ERROR_MESSAGE, exception));
@@ -44,7 +49,15 @@ public class Dispatcher {
         if (request.isEqualsPath(UserApiController.USERS)) {
             response.setBody(this.userApiController.create((UserDto) request.getBody()));
         } else {
-            throw new RequestInvalidException("method error: " + request.getMethod());
+            throw new RequestInvalidException("method error: " + request.getMethod() + ' ' + request.getPath());
+        }
+    }
+
+    private void doPut(HttpRequest request) {
+        if (request.isEqualsPath(UserApiController.USERS + UserApiController.ID_ID)) {
+            this.userApiController.update(request.getPath(1), (UserDto) request.getBody());
+        } else {
+            throw new RequestInvalidException("request error: " + request.getMethod() + ' ' + request.getPath());
         }
     }
 

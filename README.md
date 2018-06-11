@@ -12,20 +12,24 @@
 ![themes-entities-class-diagram](https://github.com/miw-upm/APAW-themes-layers/blob/master/docs/themes-entities-class-diagram.png)
 
 ## API
-
 ### POST /users
 #### Parámetros del cuerpo
 - `nick`: String (**requerido**)
 - `email`: String
-
 #### Respuesta
 - 200 OK 
   - `id`: String
 - 403 BAD_REQUEST
-
 ---
-
 ### PUT /users/{id}
+#### Parámetros del cuerpo
+- `nick`: String (**requerido**)
+- `email`: String
+#### Respuesta
+- 200 OK 
+- 403 BAD_REQUEST
+- 404 NOT_FOUND
+---
 ### POST /suggestions
 ### POST /themes
 ### GET /themes
