@@ -16,4 +16,6 @@ public abstract class DaoFactory {
     public abstract UserDao getUserDao();
 
     public abstract SuggestionDao getSuggestionDao();
+
+    public abstract ThemeDao themeDao();
 }
