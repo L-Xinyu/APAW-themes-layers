@@ -23,7 +23,7 @@ public class Dispatcher {
                 case GET:
                     throw new RequestInvalidException("request error: " + request.getMethod() + ' ' + request.getPath());
                 case PUT:
-                    this.doPut(request, response);
+                    this.doPut(request);
                     break;
                 case PATCH:
                     throw new RequestInvalidException("request error: " + request.getMethod() + ' ' + request.getPath());
@@ -53,7 +53,7 @@ public class Dispatcher {
         }
     }
 
-    private void doPut(HttpRequest request, HttpResponse response) {
+    private void doPut(HttpRequest request) {
         if (request.isEqualsPath(UserApiController.USERS + UserApiController.ID_ID)) {
             this.userApiController.update(request.getPath(1), (UserDto) request.getBody());
         } else {
