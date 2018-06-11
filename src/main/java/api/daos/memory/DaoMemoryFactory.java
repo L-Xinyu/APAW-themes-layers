@@ -1,17 +1,28 @@
 package api.daos.memory;
 
 import api.daos.DaoFactory;
+import api.daos.SuggestionDao;
 import api.daos.UserDao;
 
 public class DaoMemoryFactory extends DaoFactory {
 
     private UserDao userDao;
 
+    private SuggestionDao suggestionDao;
+
     @Override
     public UserDao getUserDao() {
         if (userDao == null) {
-            userDao = new UserDaoMemory();
+            this.userDao = new UserDaoMemory();
         }
-        return userDao;
+        return this.userDao;
+    }
+
+    @Override
+    public SuggestionDao getSuggestionDao() {
+        if (suggestionDao == null) {
+            this.suggestionDao = new SuggestionDaoMemory();
+        }
+        return this.suggestionDao;
     }
 }

@@ -1,7 +1,9 @@
 package api;
 
+import api.apiControllers.SuggestionApiController;
 import api.apiControllers.UserApiController;
 import api.dtos.UserDto;
+import api.dtos.SuggestionDto;
 import api.exceptions.ArgumentNotValidException;
 import api.exceptions.NotFoundException;
 import api.exceptions.RequestInvalidException;
@@ -12,6 +14,8 @@ import http.HttpStatus;
 public class Dispatcher {
 
     private UserApiController userApiController = new UserApiController();
+
+    private SuggestionApiController suggestionApiController = new SuggestionApiController();
 
     public void submit(HttpRequest request, HttpResponse response) {
         String ERROR_MESSAGE = "{'error':'%S'}";
@@ -48,6 +52,8 @@ public class Dispatcher {
     private void doPost(HttpRequest request, HttpResponse response) {
         if (request.isEqualsPath(UserApiController.USERS)) {
             response.setBody(this.userApiController.create((UserDto) request.getBody()));
+        } else if (request.isEqualsPath(SuggestionApiController.SUGGESTIONS)) {
+            this.suggestionApiController.create((SuggestionDto) request.getBody());
         } else {
             throw new RequestInvalidException("method error: " + request.getMethod() + ' ' + request.getPath());
         }
