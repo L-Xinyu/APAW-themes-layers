@@ -31,7 +31,7 @@ public class DaoMemoryFactory extends DaoFactory {
 
     @Override
     public ThemeDao themeDao() {
-        if (this.themeDao == null ) {
+        if (this.themeDao == null) {
             this.themeDao = new ThemeDaoMemory();
         }
         return this.themeDao;

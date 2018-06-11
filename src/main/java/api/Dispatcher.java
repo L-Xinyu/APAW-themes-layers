@@ -60,7 +60,7 @@ public class Dispatcher {
             this.suggestionApiController.create((SuggestionDto) request.getBody());
         } else if (request.isEqualsPath(ThemeApiController.THEMES)) {
             response.setBody(this.themeApiController.create((ThemeDto) request.getBody()));
-        } else{
+        } else {
             throw new RequestInvalidException("method error: " + request.getMethod() + ' ' + request.getPath());
         }
     }

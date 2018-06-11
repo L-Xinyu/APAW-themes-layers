@@ -5,7 +5,7 @@ import api.dtos.ThemeDto;
 import api.exceptions.ArgumentNotValidException;
 
 public class ThemeApiController {
-    public static final String THEMES = "/themes" ;
+    public static final String THEMES = "/themes";
 
     private ThemeBusinessController themeBusinessController = new ThemeBusinessController();
 
