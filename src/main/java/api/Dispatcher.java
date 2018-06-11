@@ -1,7 +1,9 @@
 package api;
 
 import api.apiControllers.SuggestionApiController;
+import api.apiControllers.ThemeApiController;
 import api.apiControllers.UserApiController;
+import api.dtos.ThemeDto;
 import api.dtos.UserDto;
 import api.dtos.SuggestionDto;
 import api.exceptions.ArgumentNotValidException;
@@ -16,6 +18,8 @@ public class Dispatcher {
     private UserApiController userApiController = new UserApiController();
 
     private SuggestionApiController suggestionApiController = new SuggestionApiController();
+
+    private ThemeApiController themeApiController = new ThemeApiController();
 
     public void submit(HttpRequest request, HttpResponse response) {
         String ERROR_MESSAGE = "{'error':'%S'}";
@@ -54,6 +58,8 @@ public class Dispatcher {
             response.setBody(this.userApiController.create((UserDto) request.getBody()));
         } else if (request.isEqualsPath(SuggestionApiController.SUGGESTIONS)) {
             this.suggestionApiController.create((SuggestionDto) request.getBody());
+        } else if (request.isEqualsPath(ThemeApiController.THEMES)) {
+            response.setBody(this.themeApiController.create((ThemeDto) request.getBody()));
         } else {
             throw new RequestInvalidException("method error: " + request.getMethod() + ' ' + request.getPath());
         }
