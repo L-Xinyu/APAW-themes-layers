@@ -29,8 +29,15 @@
 - 200 OK 
 - 403 BAD_REQUEST
 - 404 NOT_FOUND
----
+--- 
 ### POST /suggestions
+#### Parámetros del cuerpo
+- `negative`: Boolean (**requerido**)
+- `description`: String (**requerido**)
+#### Respuesta
+- 200 OK 
+- 403 BAD_REQUEST
+---
 ### POST /themes
 ### GET /themes
 ### DELETE /themes/{id}
