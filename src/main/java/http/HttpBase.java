@@ -9,7 +9,7 @@ public class HttpBase {
 
     private Object body;
 
-    public HttpBase() {
+    HttpBase() {
         headerParams = new HashMap<>();
     }
 
