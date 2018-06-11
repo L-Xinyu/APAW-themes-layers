@@ -41,6 +41,16 @@
 - 403 BAD_REQUEST
 ---
 ### POST /themes
+#### Parámetros del cuerpo
+- `reference`: String (**requerido**)
+- `category`: Category (**requerido**)
+- `userId`: String (**requerido**)
+#### Respuesta
+- 200 OK 
+  - `id`: String
+- 403 BAD_REQUEST
+- 404 NOT_FOUND
+---
 ### GET /themes
 ### DELETE /themes/{id}
 ### PATH/themes/{id}/category
