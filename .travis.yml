@@ -11,4 +11,4 @@ notifications:
     - j.bernal@upm.es
 script:
 # Test
-- mvn verify
+- mvn -Dtest=**/*Test test
