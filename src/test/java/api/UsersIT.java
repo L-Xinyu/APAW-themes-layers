@@ -21,7 +21,6 @@ class UsersIT {
         DaoFactory.setFactory(new DaoMemoryFactory());
     }
 
-
     @Test
     void testCreateUser() {
         this.createUser();
