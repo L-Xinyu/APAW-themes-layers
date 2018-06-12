@@ -57,6 +57,9 @@
   - `[ {id:String,reference:String} ]`
 ---
 ### DELETE /themes/{id}
+#### Respuesta
+- 200 OK 
+---
 ### PATH/themes/{id}/category
 ### POST /themes/{id}/votes
 ### GET /themes/{id}/average
