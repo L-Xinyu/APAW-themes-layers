@@ -7,8 +7,8 @@ import api.entities.Theme;
 import api.entities.User;
 import api.exceptions.NotFoundException;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ThemeBusinessController {
 
@@ -21,11 +21,8 @@ public class ThemeBusinessController {
     }
 
     public List<ThemeIdReferenceDto> readAll() {
-        List<Theme> themes = DaoFactory.getFactory().themeDao().findAll();
-        List<ThemeIdReferenceDto> themeIdReferenceDto = new ArrayList<>();
-        for (Theme theme : themes) {
-            themeIdReferenceDto.add(new ThemeIdReferenceDto(theme));
-        }
-        return themeIdReferenceDto;
+        return DaoFactory.getFactory().themeDao().findAll().stream().map(
+                theme -> new ThemeIdReferenceDto(theme)
+        ).collect(Collectors.toList());
     }
 }
