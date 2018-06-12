@@ -25,4 +25,8 @@ public class ThemeBusinessController {
                 theme -> new ThemeIdReferenceDto(theme)
         ).collect(Collectors.toList());
     }
+
+    public void delete(String id) {
+        DaoFactory.getFactory().themeDao().deleteById(id);
+    }
 }

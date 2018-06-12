@@ -21,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class ThemeIT {
+class ThemeIT {
 
     @BeforeAll
     static void before() {
@@ -33,11 +33,11 @@ public class ThemeIT {
         this.createTheme("Theme one");
     }
 
-    private void createTheme(String theme) {
+    private String createTheme(String theme) {
         String userId = this.createUser();
         HttpRequest request = HttpRequest.builder().path(ThemeApiController.THEMES)
                 .body(new ThemeDto(theme, Category.SPORT, userId)).post();
-        new Client().submit(request);
+        return (String) new Client().submit(request).getBody();
     }
 
     private String createUser() {
@@ -64,11 +64,22 @@ public class ThemeIT {
     @Test
     void testReadAll() {
         for (int i = 0; i < 5; i++) {
-            this.createTheme("theme"+i);
+            this.createTheme("theme" + i);
         }
         HttpRequest request = HttpRequest.builder().path(ThemeApiController.THEMES).get();
         List<ThemeIdReferenceDto> themes = (List<ThemeIdReferenceDto>) new Client().submit(request).getBody();
-        assertTrue(themes.size()>=5);
+        assertTrue(themes.size() >= 5);
+    }
+
+    @Test
+    void testDelete() {
+        String id = this.createTheme("uno");
+        HttpRequest request1 = HttpRequest.builder().path(ThemeApiController.THEMES).get();
+        int count = ((List<ThemeIdReferenceDto>) new Client().submit(request1).getBody()).size();
+        HttpRequest request2 = HttpRequest.builder().path(ThemeApiController.THEMES).path(UserApiController.ID_ID)
+                .expandPath(id).delete();
+        new Client().submit(request2);
+        assertTrue(((List<ThemeIdReferenceDto>) new Client().submit(request1).getBody()).size()<count);
     }
 
 }

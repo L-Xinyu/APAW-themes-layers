@@ -37,8 +37,9 @@ public class Dispatcher {
                 case PATCH:
                     throw new RequestInvalidException("request error: " + request.getMethod() + ' ' + request.getPath());
                 case DELETE:
-                    throw new RequestInvalidException("request error: " + request.getMethod() + ' ' + request.getPath());
-                default:
+                    this.doDelete(request);
+                    break;
+                default: // Unexpected
                     throw new RequestInvalidException("method error: " + request.getMethod());
             }
         } catch (ArgumentNotValidException | RequestInvalidException exception) {
@@ -77,6 +78,14 @@ public class Dispatcher {
     private void doPut(HttpRequest request) {
         if (request.isEqualsPath(UserApiController.USERS + UserApiController.ID_ID)) {
             this.userApiController.update(request.getPath(1), (UserDto) request.getBody());
+        } else {
+            throw new RequestInvalidException("request error: " + request.getMethod() + ' ' + request.getPath());
+        }
+    }
+
+    private void doDelete(HttpRequest request) {
+        if (request.isEqualsPath(ThemeApiController.THEMES + ThemeApiController.ID_ID)) {
+            this.themeApiController.delete(request.getPath(1));
         } else {
             throw new RequestInvalidException("request error: " + request.getMethod() + ' ' + request.getPath());
         }
