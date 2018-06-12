@@ -52,6 +52,10 @@
 - 404 NOT_FOUND
 ---
 ### GET /themes
+#### Respuesta
+- 200 OK 
+  - `[ {id:String,reference:String} ]`
+---
 ### DELETE /themes/{id}
 ### PATH/themes/{id}/category
 ### POST /themes/{id}/votes
