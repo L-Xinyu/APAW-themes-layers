@@ -60,8 +60,16 @@
 #### Respuesta
 - 200 OK 
 ---
-### PATH/themes/{id}/category
 ### POST /themes/{id}/votes
+#### Parámetros del cuerpo
+- `value`: Integer (**requerido**)
+#### Respuesta
+- 200 OK 
+- 403 BAD_REQUEST
+- 404 NOT_FOUND
+---
+### PATH/themes/{id}/category
+---
 ### GET /themes/{id}/average
 
 ##### Autor: Jesús Bernal Bermúdez U.P.M.
