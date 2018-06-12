@@ -2,9 +2,13 @@ package api.businessController;
 
 import api.daos.DaoFactory;
 import api.dtos.ThemeDto;
+import api.dtos.ThemeIdReferenceDto;
 import api.entities.Theme;
 import api.entities.User;
 import api.exceptions.NotFoundException;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class ThemeBusinessController {
 
@@ -16,4 +20,9 @@ public class ThemeBusinessController {
         return theme.getId();
     }
 
+    public List<ThemeIdReferenceDto> readAll() {
+        return DaoFactory.getFactory().themeDao().findAll().stream().map(
+                theme -> new ThemeIdReferenceDto(theme)
+        ).collect(Collectors.toList());
+    }
 }

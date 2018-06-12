@@ -2,7 +2,10 @@ package api.apiControllers;
 
 import api.businessController.ThemeBusinessController;
 import api.dtos.ThemeDto;
+import api.dtos.ThemeIdReferenceDto;
 import api.exceptions.ArgumentNotValidException;
+
+import java.util.List;
 
 public class ThemeApiController {
     public static final String THEMES = "/themes";
@@ -21,5 +24,9 @@ public class ThemeApiController {
         if (property == null) {
             throw new ArgumentNotValidException(message + " is NULL");
         }
+    }
+
+    public List<ThemeIdReferenceDto> readAll() {
+        return themeBusinessController.readAll();
     }
 }

@@ -29,7 +29,8 @@ public class Dispatcher {
                     this.doPost(request, response);
                     break;
                 case GET:
-                    throw new RequestInvalidException("request error: " + request.getMethod() + ' ' + request.getPath());
+                    this.doGet(request, response);
+                    break;
                 case PUT:
                     this.doPut(request);
                     break;
@@ -60,6 +61,14 @@ public class Dispatcher {
             this.suggestionApiController.create((SuggestionDto) request.getBody());
         } else if (request.isEqualsPath(ThemeApiController.THEMES)) {
             response.setBody(this.themeApiController.create((ThemeDto) request.getBody()));
+        } else {
+            throw new RequestInvalidException("method error: " + request.getMethod() + ' ' + request.getPath());
+        }
+    }
+
+    private void doGet(HttpRequest request, HttpResponse response) {
+        if (request.isEqualsPath(ThemeApiController.THEMES)) {
+            response.setBody(this.themeApiController.readAll());
         } else {
             throw new RequestInvalidException("method error: " + request.getMethod() + ' ' + request.getPath());
         }
