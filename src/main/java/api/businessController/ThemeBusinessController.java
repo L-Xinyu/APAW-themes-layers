@@ -5,6 +5,7 @@ import api.dtos.ThemeDto;
 import api.dtos.ThemeIdReferenceDto;
 import api.entities.Theme;
 import api.entities.User;
+import api.entities.Vote;
 import api.exceptions.NotFoundException;
 
 import java.util.List;
@@ -28,5 +29,12 @@ public class ThemeBusinessController {
 
     public void delete(String id) {
         DaoFactory.getFactory().themeDao().deleteById(id);
+    }
+
+    public void createVote(String themeId, Integer vote) {
+        Theme theme = DaoFactory.getFactory().themeDao().read(themeId).orElseThrow(
+                () -> new NotFoundException("Theme ("+themeId+")"));
+        theme.getVotes().add(new Vote(vote));
+        DaoFactory.getFactory().themeDao().save(theme);
     }
 }

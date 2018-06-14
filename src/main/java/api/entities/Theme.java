@@ -1,6 +1,7 @@
 package api.entities;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Theme {
@@ -22,6 +23,7 @@ public class Theme {
         this.date = LocalDateTime.now();
         this.category = category;
         this.user = user;
+        this.votes = new ArrayList<>();
     }
 
     public String getId() {

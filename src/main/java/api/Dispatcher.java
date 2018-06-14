@@ -62,6 +62,8 @@ public class Dispatcher {
             this.suggestionApiController.create((SuggestionDto) request.getBody());
         } else if (request.isEqualsPath(ThemeApiController.THEMES)) {
             response.setBody(this.themeApiController.create((ThemeDto) request.getBody()));
+        } else if (request.isEqualsPath(ThemeApiController.THEMES + ThemeApiController.ID_ID + ThemeApiController.VOTES)) {
+           this.themeApiController.createVote(request.getPath(1),(Integer) request.getBody());
         } else {
             throw new RequestInvalidException("method error: " + request.getMethod() + ' ' + request.getPath());
         }
