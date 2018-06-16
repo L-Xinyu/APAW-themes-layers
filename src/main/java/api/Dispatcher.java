@@ -63,7 +63,7 @@ public class Dispatcher {
         } else if (request.isEqualsPath(ThemeApiController.THEMES)) {
             response.setBody(this.themeApiController.create((ThemeDto) request.getBody()));
         } else if (request.isEqualsPath(ThemeApiController.THEMES + ThemeApiController.ID_ID + ThemeApiController.VOTES)) {
-           this.themeApiController.createVote(request.getPath(1),(Integer) request.getBody());
+            this.themeApiController.createVote(request.getPath(1), (Integer) request.getBody());
         } else {
             throw new RequestInvalidException("method error: " + request.getMethod() + ' ' + request.getPath());
         }
@@ -72,6 +72,8 @@ public class Dispatcher {
     private void doGet(HttpRequest request, HttpResponse response) {
         if (request.isEqualsPath(ThemeApiController.THEMES)) {
             response.setBody(this.themeApiController.readAll());
+        } else if (request.isEqualsPath(ThemeApiController.THEMES + ThemeApiController.ID_ID + ThemeApiController.AVERAGE)) {
+            response.setBody(this.themeApiController.readAverage(request.getPath(1)));
         } else {
             throw new RequestInvalidException("method error: " + request.getMethod() + ' ' + request.getPath());
         }

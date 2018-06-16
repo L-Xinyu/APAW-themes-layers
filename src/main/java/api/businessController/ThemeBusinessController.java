@@ -37,4 +37,10 @@ public class ThemeBusinessController {
         theme.getVotes().add(new Vote(vote));
         DaoFactory.getFactory().themeDao().save(theme);
     }
+
+    public Double readAverage(String themeId) {
+        Theme theme = DaoFactory.getFactory().themeDao().read(themeId)
+                .orElseThrow(() -> new NotFoundException("Theme (" + themeId + ")"));
+        return theme.getVotes().stream().mapToDouble(Vote::getValue).average().orElse(Double.NaN);
+    }
 }

@@ -99,4 +99,19 @@ class ThemeIT {
         assertEquals(HttpStatus.NOT_FOUND, exception.getHttpStatus());
     }
 
+    @Test
+    void testThemeAverage() {
+        String id = this.createTheme("uno");
+        HttpRequest request = HttpRequest.builder().path(ThemeApiController.THEMES).path(UserApiController.ID_ID)
+                .expandPath(id).path(ThemeApiController.VOTES).body(5).post();
+        new Client().submit(request);
+        request = HttpRequest.builder().path(ThemeApiController.THEMES).path(UserApiController.ID_ID)
+                .expandPath(id).path(ThemeApiController.VOTES).body(10).post();
+        new Client().submit(request);
+
+        HttpRequest request2 = HttpRequest.builder().path(ThemeApiController.THEMES).path(UserApiController.ID_ID)
+                .expandPath(id).path(ThemeApiController.AVERAGE).get();
+        assertEquals(7.5, ((Double) new Client().submit(request2).getBody()), 10e-5);
+    }
+
 }
