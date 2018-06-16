@@ -14,6 +14,8 @@ public class ThemeApiController {
 
     public static final String VOTES = "/votes";
 
+    public static final String AVERAGE = "/average";
+
     private ThemeBusinessController themeBusinessController = new ThemeBusinessController();
 
     public String create(ThemeDto themeDto) {
@@ -43,4 +45,7 @@ public class ThemeApiController {
         }
     }
 
+    public Double readAverage(String themeId) {
+        return this.themeBusinessController.readAverage(themeId);
+    }
 }
