@@ -79,7 +79,24 @@ class ThemeIT {
         HttpRequest request2 = HttpRequest.builder().path(ThemeApiController.THEMES).path(UserApiController.ID_ID)
                 .expandPath(id).delete();
         new Client().submit(request2);
-        assertTrue(((List<ThemeIdReferenceDto>) new Client().submit(request1).getBody()).size()<count);
+        assertTrue(((List<ThemeIdReferenceDto>) new Client().submit(request1).getBody()).size() < count);
+    }
+
+    @Test
+    void testVoteTheme() {
+        String id = this.createTheme("uno");
+        HttpRequest request = HttpRequest.builder().path(ThemeApiController.THEMES).path(UserApiController.ID_ID)
+                .expandPath(id).path(ThemeApiController.VOTES).body(5).post();
+        new Client().submit(request);
+        new Client().submit(request);
+    }
+
+    @Test
+    void testVoteThemeThemeIdNotFound() {
+        HttpRequest request = HttpRequest.builder().path(ThemeApiController.THEMES).path(UserApiController.ID_ID)
+                .expandPath("h3rFdEsw").path(ThemeApiController.VOTES).body(5).post();
+        HttpException exception = assertThrows(HttpException.class, () -> new Client().submit(request));
+        assertEquals(HttpStatus.NOT_FOUND, exception.getHttpStatus());
     }
 
 }
