@@ -68,8 +68,12 @@
 - 403 BAD_REQUEST
 - 404 NOT_FOUND
 ---
+### GET /themes/{id}/average
+#### Respuesta
+- 200 OK 
+  - `average`: Double
+- 404 NOT_FOUND
+---
 ### PATH/themes/{id}/category
 ---
-### GET /themes/{id}/average
-
 ##### Autor: Jesús Bernal Bermúdez U.P.M.
