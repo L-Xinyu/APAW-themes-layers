@@ -75,5 +75,11 @@
 - 404 NOT_FOUND
 ---
 ### PATH/themes/{id}/category
+#### Parámetros del cuerpo
+- `category`: String (**requerido**)
+#### Respuesta
+- 200 OK 
+- 403 BAD_REQUEST
+- 404 NOT_FOUND
 ---
 ##### Autor: Jesús Bernal Bermúdez U.P.M.
