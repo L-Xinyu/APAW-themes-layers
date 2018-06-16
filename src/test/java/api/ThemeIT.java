@@ -85,33 +85,29 @@ class ThemeIT {
     @Test
     void testVoteTheme() {
         String id = this.createTheme("uno");
+        voteTheme(id,5);
+    }
+
+    private void voteTheme(String themeId, Integer vote) {
         HttpRequest request = HttpRequest.builder().path(ThemeApiController.THEMES).path(UserApiController.ID_ID)
-                .expandPath(id).path(ThemeApiController.VOTES).body(5).post();
-        new Client().submit(request);
+                .expandPath(themeId).path(ThemeApiController.VOTES).body(vote).post();
         new Client().submit(request);
     }
 
     @Test
     void testVoteThemeThemeIdNotFound() {
-        HttpRequest request = HttpRequest.builder().path(ThemeApiController.THEMES).path(UserApiController.ID_ID)
-                .expandPath("h3rFdEsw").path(ThemeApiController.VOTES).body(5).post();
-        HttpException exception = assertThrows(HttpException.class, () -> new Client().submit(request));
+        HttpException exception = assertThrows(HttpException.class, () -> this.voteTheme("h3rFdEsw",5));
         assertEquals(HttpStatus.NOT_FOUND, exception.getHttpStatus());
     }
 
     @Test
     void testThemeAverage() {
         String id = this.createTheme("uno");
+        this.voteTheme(id,5);
+        this.voteTheme(id,10);
         HttpRequest request = HttpRequest.builder().path(ThemeApiController.THEMES).path(UserApiController.ID_ID)
-                .expandPath(id).path(ThemeApiController.VOTES).body(5).post();
-        new Client().submit(request);
-        request = HttpRequest.builder().path(ThemeApiController.THEMES).path(UserApiController.ID_ID)
-                .expandPath(id).path(ThemeApiController.VOTES).body(10).post();
-        new Client().submit(request);
-
-        HttpRequest request2 = HttpRequest.builder().path(ThemeApiController.THEMES).path(UserApiController.ID_ID)
                 .expandPath(id).path(ThemeApiController.AVERAGE).get();
-        assertEquals(7.5, ((Double) new Client().submit(request2).getBody()), 10e-5);
+        assertEquals(7.5, ((Double) new Client().submit(request).getBody()), 10e-5);
     }
 
 }
