@@ -91,4 +91,12 @@ class ThemeIT {
         new Client().submit(request);
     }
 
+    @Test
+    void testVoteThemeThemeIdNotFound() {
+        HttpRequest request = HttpRequest.builder().path(ThemeApiController.THEMES).path(UserApiController.ID_ID)
+                .expandPath("h3rFdEsw").path(ThemeApiController.VOTES).body(5).post();
+        HttpException exception = assertThrows(HttpException.class, () -> new Client().submit(request));
+        assertEquals(HttpStatus.NOT_FOUND, exception.getHttpStatus());
+    }
+
 }
