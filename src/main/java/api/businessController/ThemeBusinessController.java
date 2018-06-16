@@ -14,17 +14,17 @@ import java.util.stream.Collectors;
 public class ThemeBusinessController {
 
     public String create(ThemeDto themeDto) {
-        User user = DaoFactory.getFactory().getUserDao().read(themeDto.getUserId()).orElseThrow(
-                () -> new NotFoundException("User (" + themeDto.getUserId() + ")"));
+        User user = DaoFactory.getFactory().getUserDao().read(themeDto.getUserId())
+                .orElseThrow(() -> new NotFoundException("User (" + themeDto.getUserId() + ")"));
         Theme theme = new Theme(themeDto.getReference(), themeDto.getCategory(), user);
         DaoFactory.getFactory().themeDao().save(theme);
         return theme.getId();
     }
 
     public List<ThemeIdReferenceDto> readAll() {
-        return DaoFactory.getFactory().themeDao().findAll().stream().map(
-                theme -> new ThemeIdReferenceDto(theme)
-        ).collect(Collectors.toList());
+        return DaoFactory.getFactory().themeDao().findAll()
+                .stream().map(theme -> new ThemeIdReferenceDto(theme))
+                .collect(Collectors.toList());
     }
 
     public void delete(String id) {
@@ -32,8 +32,8 @@ public class ThemeBusinessController {
     }
 
     public void createVote(String themeId, Integer vote) {
-        Theme theme = DaoFactory.getFactory().themeDao().read(themeId).orElseThrow(
-                () -> new NotFoundException("Theme ("+themeId+")"));
+        Theme theme = DaoFactory.getFactory().themeDao().read(themeId)
+                .orElseThrow(() -> new NotFoundException("Theme (" + themeId + ")"));
         theme.getVotes().add(new Vote(vote));
         DaoFactory.getFactory().themeDao().save(theme);
     }

@@ -1,9 +1,6 @@
 package api.daos.memory;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 import api.daos.GenericDao;
 import org.apache.logging.log4j.LogManager;
@@ -14,8 +11,8 @@ public abstract class GenericDaoMemory<T> implements GenericDao<T, String> {
 
     private int id;
 
-    GenericDaoMemory(Map<String, T> map) {
-        this.map = map;
+    GenericDaoMemory() {
+        this.map = new HashMap<>();
         this.id = 1;
     }
 
@@ -24,7 +21,7 @@ public abstract class GenericDaoMemory<T> implements GenericDao<T, String> {
         String id = this.getId(entity);
         if (id == null) {
             id = String.valueOf(this.id++);
-            this.setId(entity, String.valueOf(id));
+            this.setId(entity, id);
         }
         this.map.put(id, entity);
         LogManager.getLogger(this.getClass()).debug("   save: " + entity);

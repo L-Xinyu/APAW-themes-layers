@@ -7,10 +7,6 @@ import java.util.HashMap;
 
 public class ThemeDaoMemory extends GenericDaoMemory<Theme> implements ThemeDao {
 
-    public ThemeDaoMemory() {
-        super(new HashMap<>());
-    }
-
     @Override
     public String getId(Theme theme) {
         return theme.getId();

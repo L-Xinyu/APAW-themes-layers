@@ -7,10 +7,6 @@ import java.util.HashMap;
 
 public class UserDaoMemory extends GenericDaoMemory<User> implements UserDao {
 
-    public UserDaoMemory() {
-        super(new HashMap<>());
-    }
-
     @Override
     public String getId(User user) {
         return user.getId();

@@ -14,7 +14,8 @@ public class UserBusinessController {
     }
 
     public void updateNick(String id, UserDto userDto) {
-        User user = DaoFactory.getFactory().getUserDao().read(id).orElseThrow(() -> new NotFoundException("User id: " + id));
+        User user = DaoFactory.getFactory().getUserDao().read(id)
+                .orElseThrow(() -> new NotFoundException("User id: " + id));
         user.setNick(userDto.getNick());
         DaoFactory.getFactory().getUserDao().save(user);
     }

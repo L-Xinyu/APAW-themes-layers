@@ -1,7 +1,9 @@
 package api.dtos;
 
 public class SuggestionDto {
+
     private Boolean negative;
+
     private String description;
 
     public SuggestionDto(Boolean negative, String description) {
