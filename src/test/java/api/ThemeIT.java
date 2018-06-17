@@ -110,4 +110,12 @@ class ThemeIT {
         assertEquals(7.5, ((Double) new Client().submit(request).getBody()), 10e-5);
     }
 
+    @Test
+    void testUpdateCategory() {
+        String id = this.createTheme("uno");
+        HttpRequest request = HttpRequest.builder().path(ThemeApiController.THEMES).path(UserApiController.ID_ID)
+                .expandPath(id).path(ThemeApiController.CATEGORY).body(Category.LEISURE_TIME).patch();
+        new Client().submit(request);
+    }
+
 }
