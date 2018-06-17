@@ -6,6 +6,7 @@ import api.apiControllers.UserApiController;
 import api.dtos.ThemeDto;
 import api.dtos.UserDto;
 import api.dtos.SuggestionDto;
+import api.entities.Category;
 import api.exceptions.ArgumentNotValidException;
 import api.exceptions.NotFoundException;
 import api.exceptions.RequestInvalidException;
@@ -35,7 +36,8 @@ public class Dispatcher {
                     this.doPut(request);
                     break;
                 case PATCH:
-                    throw new RequestInvalidException("request error: " + request.getMethod() + ' ' + request.getPath());
+                    this.doPatch(request);
+                    break;
                 case DELETE:
                     this.doDelete(request);
                     break;
@@ -82,6 +84,14 @@ public class Dispatcher {
     private void doPut(HttpRequest request) {
         if (request.isEqualsPath(UserApiController.USERS + UserApiController.ID_ID)) {
             this.userApiController.update(request.getPath(1), (UserDto) request.getBody());
+        } else {
+            throw new RequestInvalidException("request error: " + request.getMethod() + ' ' + request.getPath());
+        }
+    }
+
+    private void doPatch(HttpRequest request) {
+        if (request.isEqualsPath(ThemeApiController.THEMES + ThemeApiController.ID_ID + ThemeApiController.CATEGORY)) {
+            this.themeApiController.updateCategory(request.getPath(1), (Category) request.getBody());
         } else {
             throw new RequestInvalidException("request error: " + request.getMethod() + ' ' + request.getPath());
         }

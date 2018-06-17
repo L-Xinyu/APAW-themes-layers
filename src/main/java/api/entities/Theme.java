@@ -50,6 +50,10 @@ public class Theme {
         return category;
     }
 
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
     public User getUser() {
         return user;
     }

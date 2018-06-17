@@ -74,7 +74,7 @@
   - `average`: Double
 - 404 NOT_FOUND
 ---
-### PATH/themes/{id}/category
+### PATH /themes/{id}/category
 #### Parámetros del cuerpo
 - `category`: String (**requerido**)
 #### Respuesta

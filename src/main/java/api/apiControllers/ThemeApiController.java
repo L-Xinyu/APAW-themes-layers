@@ -3,6 +3,7 @@ package api.apiControllers;
 import api.businessController.ThemeBusinessController;
 import api.dtos.ThemeDto;
 import api.dtos.ThemeIdReferenceDto;
+import api.entities.Category;
 import api.exceptions.ArgumentNotValidException;
 
 import java.util.List;
@@ -15,6 +16,8 @@ public class ThemeApiController {
     public static final String VOTES = "/votes";
 
     public static final String AVERAGE = "/average";
+
+    public static final String CATEGORY = "/category";
 
     private ThemeBusinessController themeBusinessController = new ThemeBusinessController();
 
@@ -35,8 +38,8 @@ public class ThemeApiController {
     }
 
     public void createVote(String themeId, Integer vote) {
-        this.validate(vote,"vote");
-        this.themeBusinessController.createVote(themeId,vote);
+        this.validate(vote, "vote");
+        this.themeBusinessController.createVote(themeId, vote);
     }
 
     private void validate(Object property, String message) {
@@ -47,5 +50,10 @@ public class ThemeApiController {
 
     public Double readAverage(String themeId) {
         return this.themeBusinessController.readAverage(themeId);
+    }
+
+    public void updateCategory(String themeId, Category category) {
+        this.validate(category, "category");
+        this.themeBusinessController.updateCategory(themeId, category);
     }
 }

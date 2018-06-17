@@ -3,6 +3,7 @@ package api.businessController;
 import api.daos.DaoFactory;
 import api.dtos.ThemeDto;
 import api.dtos.ThemeIdReferenceDto;
+import api.entities.Category;
 import api.entities.Theme;
 import api.entities.User;
 import api.entities.Vote;
@@ -42,5 +43,12 @@ public class ThemeBusinessController {
         Theme theme = DaoFactory.getFactory().themeDao().read(themeId)
                 .orElseThrow(() -> new NotFoundException("Theme (" + themeId + ")"));
         return theme.getVotes().stream().mapToDouble(Vote::getValue).average().orElse(Double.NaN);
+    }
+
+    public void updateCategory(String themeId, Category category) {
+        Theme theme = DaoFactory.getFactory().themeDao().read(themeId)
+                .orElseThrow(() -> new NotFoundException("Theme (" + themeId + ")"));
+        theme.setCategory(category);
+        DaoFactory.getFactory().themeDao().save(theme);
     }
 }
