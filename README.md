@@ -82,4 +82,9 @@
 - 403 BAD_REQUEST
 - 404 NOT_FOUND
 ---
+### GET /themes/search?q=average:>=3
+#### Respuesta
+- 200 OK 
+- 403 BAD_REQUEST
+---
 ##### Autor: Jesús Bernal Bermúdez U.P.M.
