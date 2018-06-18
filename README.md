@@ -84,7 +84,8 @@
 ---
 ### GET /themes/search?q=average:>=3
 #### Respuesta
-- 200 OK 
+- 200 OK
+  - `[ {id:String,reference:String} ]`
 - 403 BAD_REQUEST
 ---
 ##### Autor: Jesús Bernal Bermúdez U.P.M.
