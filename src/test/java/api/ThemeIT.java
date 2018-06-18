@@ -2,8 +2,6 @@ package api;
 
 import api.apiControllers.ThemeApiController;
 import api.apiControllers.UserApiController;
-import api.daos.DaoFactory;
-import api.daos.memory.DaoMemoryFactory;
 import api.dtos.ThemeDto;
 import api.dtos.ThemeIdReferenceDto;
 import api.dtos.UserDto;
@@ -12,7 +10,6 @@ import http.Client;
 import http.HttpException;
 import http.HttpRequest;
 import http.HttpStatus;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -22,11 +19,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class ThemeIT {
-
-    @BeforeAll
-    static void before() {
-        DaoFactory.setFactory(new DaoMemoryFactory());
-    }
 
     @Test
     void testCreateTheme() {

@@ -17,16 +17,18 @@ public class User {
         return id;
     }
 
-    public void setId(String id) {
+    public User setId(String id) {
         this.id = id;
+        return this;
     }
 
     public String getNick() {
         return nick;
     }
 
-    public void setNick(String nick) {
+    public User setNick(String nick) {
         this.nick = nick;
+        return this;
     }
 
     public String getEmail() {

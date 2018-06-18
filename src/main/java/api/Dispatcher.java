@@ -3,6 +3,8 @@ package api;
 import api.apiControllers.SuggestionApiController;
 import api.apiControllers.ThemeApiController;
 import api.apiControllers.UserApiController;
+import api.daos.DaoFactory;
+import api.daos.memory.DaoMemoryFactory;
 import api.dtos.ThemeDto;
 import api.dtos.UserDto;
 import api.dtos.SuggestionDto;
@@ -13,8 +15,14 @@ import api.exceptions.RequestInvalidException;
 import http.HttpRequest;
 import http.HttpResponse;
 import http.HttpStatus;
+import org.apache.logging.log4j.LogManager;
 
 public class Dispatcher {
+
+    static {
+        DaoFactory.setFactory(new DaoMemoryFactory());
+        LogManager.getLogger(Dispatcher.class).debug("   create DaoMemoryFactory");
+    }
 
     private UserApiController userApiController = new UserApiController();
 

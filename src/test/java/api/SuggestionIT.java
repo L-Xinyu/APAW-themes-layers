@@ -1,14 +1,11 @@
 package api;
 
 import api.apiControllers.SuggestionApiController;
-import api.daos.DaoFactory;
-import api.daos.memory.DaoMemoryFactory;
 import api.dtos.SuggestionDto;
 import http.Client;
 import http.HttpException;
 import http.HttpRequest;
 import http.HttpStatus;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -16,15 +13,10 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class SuggestionIT {
 
-    @BeforeAll
-    static void before() {
-        DaoFactory.setFactory(new DaoMemoryFactory());
-    }
-
     @Test
     void testCreateUser() {
         HttpRequest request = HttpRequest.builder().path(SuggestionApiController.SUGGESTIONS).body(new SuggestionDto(false, "Mejorable...")).post();
-        new Client().submit(request).getBody();
+        new Client().submit(request);
     }
 
     @Test

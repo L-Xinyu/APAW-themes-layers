@@ -24,7 +24,7 @@ public class ThemeBusinessController {
 
     public List<ThemeIdReferenceDto> readAll() {
         return DaoFactory.getFactory().themeDao().findAll()
-                .stream().map(theme -> new ThemeIdReferenceDto(theme))
+                .stream().map(ThemeIdReferenceDto::new)
                 .collect(Collectors.toList());
     }
 
@@ -42,7 +42,9 @@ public class ThemeBusinessController {
     public Double readAverage(String themeId) {
         Theme theme = DaoFactory.getFactory().themeDao().read(themeId)
                 .orElseThrow(() -> new NotFoundException("Theme (" + themeId + ")"));
-        return theme.getVotes().stream().mapToDouble(Vote::getValue).average().orElse(Double.NaN);
+        return theme.getVotes()
+                .stream().mapToDouble(Vote::getValue).average()
+                .orElse(Double.NaN);
     }
 
     public void updateCategory(String themeId, Category category) {

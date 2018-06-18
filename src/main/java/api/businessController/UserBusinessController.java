@@ -13,10 +13,10 @@ public class UserBusinessController {
         return user.getId();
     }
 
-    public void updateNick(String id, UserDto userDto) {
+    public void update(String id, UserDto userDto) {
         User user = DaoFactory.getFactory().getUserDao().read(id)
                 .orElseThrow(() -> new NotFoundException("User id: " + id));
-        user.setNick(userDto.getNick());
+        user.setNick(userDto.getNick()).setEmail(userDto.getNick());
         DaoFactory.getFactory().getUserDao().save(user);
     }
 

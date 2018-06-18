@@ -39,13 +39,10 @@ public class ThemeApiController {
 
     public void createVote(String themeId, Integer vote) {
         this.validate(vote, "vote");
-        this.themeBusinessController.createVote(themeId, vote);
-    }
-
-    private void validate(Object property, String message) {
-        if (property == null) {
-            throw new ArgumentNotValidException(message + " is NULL");
+        if(vote<0 || vote>10){
+            throw new ArgumentNotValidException("vote is between 0 and 10");
         }
+        this.themeBusinessController.createVote(themeId, vote);
     }
 
     public Double readAverage(String themeId) {
@@ -56,4 +53,11 @@ public class ThemeApiController {
         this.validate(category, "category");
         this.themeBusinessController.updateCategory(themeId, category);
     }
+
+    private void validate(Object property, String message) {
+        if (property == null) {
+            throw new ArgumentNotValidException(message + " is NULL");
+        }
+    }
+
 }

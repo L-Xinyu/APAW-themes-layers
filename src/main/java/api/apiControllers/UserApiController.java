@@ -18,11 +18,10 @@ public class UserApiController {
         return this.userBusinessController.create(userDto);
     }
 
-
     public void update(String id, UserDto userDto) {
         this.validate(userDto, "userDto");
         this.validate(userDto.getNick(), "UserDto Nick");
-        this.userBusinessController.updateNick(id, userDto);
+        this.userBusinessController.update(id, userDto);
     }
 
     private void validate(Object property, String message) {
