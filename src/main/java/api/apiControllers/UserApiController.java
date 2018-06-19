@@ -4,6 +4,8 @@ import api.businessController.UserBusinessController;
 import api.dtos.UserDto;
 import api.exceptions.ArgumentNotValidException;
 
+import java.util.Optional;
+
 public class UserApiController {
 
     public static final String USERS = "/users";
@@ -25,8 +27,6 @@ public class UserApiController {
     }
 
     private void validate(Object property, String message) {
-        if (property == null) {
-            throw new ArgumentNotValidException(message + " is NULL");
-        }
+        Optional.ofNullable(property).orElseThrow(() -> new ArgumentNotValidException(message + " is NULL"));
     }
 }

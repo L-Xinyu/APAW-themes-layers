@@ -7,6 +7,7 @@ import api.entities.Category;
 import api.exceptions.ArgumentNotValidException;
 
 import java.util.List;
+import java.util.Optional;
 
 public class ThemeApiController {
     public static final String THEMES = "/themes";
@@ -55,9 +56,7 @@ public class ThemeApiController {
     }
 
     private void validate(Object property, String message) {
-        if (property == null) {
-            throw new ArgumentNotValidException(message + " is missing");
-        }
+        Optional.ofNullable(property).orElseThrow(() -> new ArgumentNotValidException(message + " is missing"));
     }
 
     public List<ThemeIdReferenceDto> find(String query) {
