@@ -26,8 +26,6 @@ public class ThemeApiController {
     public String create(ThemeDto themeDto) {
         this.validate(themeDto, "themeDto");
         this.validate(themeDto.getReference(), "themeDto reference");
-        this.validate(themeDto.getCategory(), "themeDto category");
-        this.validate(themeDto.getUserId(), "themeDto user id");
         return this.themeBusinessController.create(themeDto);
     }
 

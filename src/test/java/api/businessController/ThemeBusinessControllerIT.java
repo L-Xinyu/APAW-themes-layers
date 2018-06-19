@@ -2,7 +2,6 @@ package api.businessController;
 
 import api.daos.DaoFactory;
 import api.daos.memory.DaoMemoryFactory;
-import api.entities.Category;
 import api.entities.Theme;
 import api.entities.User;
 import org.junit.jupiter.api.BeforeEach;
@@ -23,7 +22,7 @@ class ThemeBusinessControllerIT {
         this.themeBusinessController = new ThemeBusinessController();
         User user = new User("nick", null);
         DaoFactory.getFactory().getUserDao().save(user);
-        this.theme = new Theme("uno", Category.SPORT, user);
+        this.theme = new Theme("uno");
         DaoFactory.getFactory().themeDao().save(this.theme);
     }
 

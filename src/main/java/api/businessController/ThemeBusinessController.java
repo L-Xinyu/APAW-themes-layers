@@ -15,9 +15,12 @@ import java.util.stream.Collectors;
 public class ThemeBusinessController {
 
     public String create(ThemeDto themeDto) {
-        User user = DaoFactory.getFactory().getUserDao().read(themeDto.getUserId())
-                .orElseThrow(() -> new NotFoundException("User (" + themeDto.getUserId() + ")"));
-        Theme theme = new Theme(themeDto.getReference(), themeDto.getCategory(), user);
+        User user = null;
+        if (themeDto.getUserId() != null) {
+            user = DaoFactory.getFactory().getUserDao().read(themeDto.getUserId())
+                    .orElseThrow(() -> new NotFoundException("User (" + themeDto.getUserId() + ")"));
+        }
+        Theme theme = Theme.builder(themeDto.getReference()).user(user).category(themeDto.getCategory()).build();
         DaoFactory.getFactory().themeDao().save(theme);
         return theme.getId();
     }
