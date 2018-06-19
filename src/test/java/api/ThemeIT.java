@@ -14,9 +14,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 class ThemeIT {
 
@@ -76,27 +74,27 @@ class ThemeIT {
     @Test
     void testVoteTheme() {
         String id = this.createTheme("uno");
-        voteTheme(id,5);
+        voteTheme(id, 5);
     }
 
     private void voteTheme(String themeId, Integer vote) {
-        HttpRequest request = HttpRequest.builder().path(ThemeApiController.THEMES).path(UserApiController.ID_ID)
+        HttpRequest request = HttpRequest.builder().path(ThemeApiController.THEMES).path(ThemeApiController.ID_ID)
                 .expandPath(themeId).path(ThemeApiController.VOTES).body(vote).post();
         new Client().submit(request);
     }
 
     @Test
     void testVoteThemeThemeIdNotFound() {
-        HttpException exception = assertThrows(HttpException.class, () -> this.voteTheme("h3rFdEsw",5));
+        HttpException exception = assertThrows(HttpException.class, () -> this.voteTheme("h3rFdEsw", 5));
         assertEquals(HttpStatus.NOT_FOUND, exception.getHttpStatus());
     }
 
     @Test
     void testThemeAverage() {
         String id = this.createTheme("uno");
-        this.voteTheme(id,5);
-        this.voteTheme(id,10);
-        HttpRequest request = HttpRequest.builder().path(ThemeApiController.THEMES).path(UserApiController.ID_ID)
+        this.voteTheme(id, 5);
+        this.voteTheme(id, 10);
+        HttpRequest request = HttpRequest.builder().path(ThemeApiController.THEMES).path(ThemeApiController.ID_ID)
                 .expandPath(id).path(ThemeApiController.AVERAGE).get();
         assertEquals(7.5, ((Double) new Client().submit(request).getBody()), 10e-5);
     }
@@ -104,9 +102,43 @@ class ThemeIT {
     @Test
     void testUpdateCategory() {
         String id = this.createTheme("uno");
-        HttpRequest request = HttpRequest.builder().path(ThemeApiController.THEMES).path(UserApiController.ID_ID)
+        HttpRequest request = HttpRequest.builder().path(ThemeApiController.THEMES).path(ThemeApiController.ID_ID)
                 .expandPath(id).path(ThemeApiController.CATEGORY).body(Category.LEISURE_TIME).patch();
         new Client().submit(request);
     }
+
+    @Test
+    void testSearchAverage() {
+        String id = this.createTheme("uno");
+        this.voteTheme(id, 5);
+        this.voteTheme(id, 10);
+        HttpRequest request = HttpRequest.builder().path(ThemeApiController.THEMES).path(ThemeApiController.SEARCH)
+                .param("q", "average:>=7").get();
+        List<ThemeIdReferenceDto> themes = (List<ThemeIdReferenceDto>) new Client().submit(request).getBody();
+       assertFalse(themes.isEmpty());
+    }
+
+    @Test
+    void testSearchAverageWithoutParamQ() {
+        String id = this.createTheme("uno");
+        this.voteTheme(id, 5);
+        this.voteTheme(id, 10);
+        HttpRequest request = HttpRequest.builder().path(ThemeApiController.THEMES).path(ThemeApiController.SEARCH)
+                .param("error", "average:>=7").get();
+        HttpException exception = assertThrows(HttpException.class, () -> new Client().submit(request));
+        assertEquals(HttpStatus.BAD_REQUEST, exception.getHttpStatus());
+    }
+
+    @Test
+    void testSearchAverageParamError() {
+        String id = this.createTheme("uno");
+        this.voteTheme(id, 5);
+        this.voteTheme(id, 10);
+        HttpRequest request = HttpRequest.builder().path(ThemeApiController.THEMES).path(ThemeApiController.SEARCH)
+                .param("error", "error:>=7").get();
+        HttpException exception = assertThrows(HttpException.class, () -> new Client().submit(request));
+        assertEquals(HttpStatus.BAD_REQUEST, exception.getHttpStatus());
+    }
+
 
 }
