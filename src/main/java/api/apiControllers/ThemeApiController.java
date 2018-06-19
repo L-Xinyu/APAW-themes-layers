@@ -19,6 +19,8 @@ public class ThemeApiController {
 
     public static final String CATEGORY = "/category";
 
+    public static final String SEARCH = "/search";
+
     private ThemeBusinessController themeBusinessController = new ThemeBusinessController();
 
     public String create(ThemeDto themeDto) {
@@ -39,7 +41,7 @@ public class ThemeApiController {
 
     public void createVote(String themeId, Integer vote) {
         this.validate(vote, "vote");
-        if(vote<0 || vote>10){
+        if (vote < 0 || vote > 10) {
             throw new ArgumentNotValidException("vote is between 0 and 10");
         }
         this.themeBusinessController.createVote(themeId, vote);
@@ -56,8 +58,15 @@ public class ThemeApiController {
 
     private void validate(Object property, String message) {
         if (property == null) {
-            throw new ArgumentNotValidException(message + " is NULL");
+            throw new ArgumentNotValidException(message + " is missing");
         }
     }
 
+    public List<ThemeIdReferenceDto> find(String query) {
+        this.validate(query, "query param q");
+        if (!"average".equals(query.split(":>=")[0])) {
+            throw new ArgumentNotValidException("query param q is incorrect, missing 'average:>='");
+        }
+        return this.themeBusinessController.findByAverageGreaterThanEqual(Double.valueOf(query.split(":>=")[1]));
+    }
 }

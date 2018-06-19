@@ -42,6 +42,10 @@ public class ThemeBusinessController {
     public Double readAverage(String themeId) {
         Theme theme = DaoFactory.getFactory().themeDao().read(themeId)
                 .orElseThrow(() -> new NotFoundException("Theme (" + themeId + ")"));
+        return this.average(theme);
+    }
+
+    private Double average(Theme theme) {
         return theme.getVotes()
                 .stream().mapToDouble(Vote::getValue).average()
                 .orElse(Double.NaN);
@@ -53,4 +57,12 @@ public class ThemeBusinessController {
         theme.setCategory(category);
         DaoFactory.getFactory().themeDao().save(theme);
     }
+
+    public List<ThemeIdReferenceDto> findByAverageGreaterThanEqual(Double value) {
+        return DaoFactory.getFactory().themeDao().findByVotesNotEmpty().stream()
+                .filter(theme -> this.average(theme) >= value)
+                .map(ThemeIdReferenceDto::new)
+                .collect(Collectors.toList());
+    }
+
 }

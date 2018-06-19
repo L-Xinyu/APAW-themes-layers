@@ -84,6 +84,8 @@ public class Dispatcher {
             response.setBody(this.themeApiController.readAll());
         } else if (request.isEqualsPath(ThemeApiController.THEMES + ThemeApiController.ID_ID + ThemeApiController.AVERAGE)) {
             response.setBody(this.themeApiController.readAverage(request.getPath(1)));
+        } else if (request.isEqualsPath(ThemeApiController.THEMES + ThemeApiController.SEARCH)) {
+            response.setBody(this.themeApiController.find(request.getParams().get('q')));
         } else {
             throw new RequestInvalidException("method error: " + request.getMethod() + ' ' + request.getPath());
         }
