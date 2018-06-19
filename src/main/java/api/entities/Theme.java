@@ -18,12 +18,14 @@ public class Theme {
 
     private List<Vote> votes;
 
-    public Theme(String reference, Category category, User user) {
+    public Theme(String reference) {
         this.reference = reference;
         this.date = LocalDateTime.now();
-        this.category = category;
-        this.user = user;
         this.votes = new ArrayList<>();
+    }
+
+    public static Builder builder(String reference) {
+        return new Builder(reference);
     }
 
     public String getId() {
@@ -76,5 +78,37 @@ public class Theme {
                 ", user=" + user +
                 ", votes=" + votes +
                 '}';
+    }
+
+    public static class Builder {
+        private Theme theme;
+
+        private Builder(String reference) {
+            this.theme = new Theme(reference);
+        }
+
+        public Builder id(String id) {
+            this.theme.id = id;
+            return this;
+        }
+
+        public Builder category(Category category) {
+            this.theme.category = category;
+            return this;
+        }
+
+        public Builder user(User user) {
+            this.theme.user = user;
+            return this;
+        }
+
+        public Builder vote(Vote vote) {
+            this.theme.votes.add(vote);
+            return this;
+        }
+
+        public Theme build() {
+            return this.theme;
+        }
     }
 }

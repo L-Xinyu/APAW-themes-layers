@@ -46,11 +46,10 @@ class ThemeIT {
     }
 
     @Test
-    void testCreateThemeWithoutCategory() {
+    void testCreateThemeWithoutCategoryUser() {
         HttpRequest request = HttpRequest.builder().path(ThemeApiController.THEMES)
-                .body(new ThemeDto("Theme one", null, "h3rFdEsw")).post();
-        HttpException exception = assertThrows(HttpException.class, () -> new Client().submit(request));
-        assertEquals(HttpStatus.BAD_REQUEST, exception.getHttpStatus());
+                .body(new ThemeDto("Theme one", null, null)).post();
+        new Client().submit(request);
     }
 
     @Test

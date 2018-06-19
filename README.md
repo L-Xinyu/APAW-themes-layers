@@ -43,8 +43,8 @@
 ### POST /themes
 #### Parámetros del cuerpo
 - `reference`: String (**requerido**)
-- `category`: Category (**requerido**)
-- `userId`: String (**requerido**)
+- `category`: Category
+- `userId`: String
 #### Respuesta
 - 200 OK 
   - `id`: String
