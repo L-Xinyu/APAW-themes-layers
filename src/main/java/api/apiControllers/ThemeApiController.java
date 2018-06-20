@@ -1,13 +1,12 @@
 package api.apiControllers;
 
 import api.businessController.ThemeBusinessController;
-import api.dtos.ThemeDto;
+import api.dtos.ThemeCreationDto;
 import api.dtos.ThemeIdReferenceDto;
 import api.entities.Category;
 import api.exceptions.ArgumentNotValidException;
 
 import java.util.List;
-import java.util.Optional;
 
 public class ThemeApiController {
     public static final String THEMES = "/themes";
@@ -24,7 +23,7 @@ public class ThemeApiController {
 
     private ThemeBusinessController themeBusinessController = new ThemeBusinessController();
 
-    public String create(ThemeDto themeDto) {
+    public String create(ThemeCreationDto themeDto) {
         this.validate(themeDto, "themeDto");
         this.validate(themeDto.getReference(), "themeDto reference");
         return this.themeBusinessController.create(themeDto);
@@ -56,7 +55,9 @@ public class ThemeApiController {
     }
 
     private void validate(Object property, String message) {
-        Optional.ofNullable(property).orElseThrow(() -> new ArgumentNotValidException(message + " is missing"));
+        if (property == null) {
+            throw new ArgumentNotValidException(message + " is missing");
+        }
     }
 
     public List<ThemeIdReferenceDto> find(String query) {

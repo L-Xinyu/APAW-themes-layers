@@ -1,7 +1,7 @@
 package api.businessController;
 
 import api.daos.DaoFactory;
-import api.dtos.ThemeDto;
+import api.dtos.ThemeCreationDto;
 import api.dtos.ThemeIdReferenceDto;
 import api.entities.Category;
 import api.entities.Theme;
@@ -14,13 +14,13 @@ import java.util.stream.Collectors;
 
 public class ThemeBusinessController {
 
-    public String create(ThemeDto themeDto) {
+    public String create(ThemeCreationDto themeCreationDto) {
         User user = null;
-        if (themeDto.getUserId() != null) {
-            user = DaoFactory.getFactory().getUserDao().read(themeDto.getUserId())
-                    .orElseThrow(() -> new NotFoundException("User (" + themeDto.getUserId() + ")"));
+        if (themeCreationDto.getUserId() != null) {
+            user = DaoFactory.getFactory().getUserDao().read(themeCreationDto.getUserId())
+                    .orElseThrow(() -> new NotFoundException("User (" + themeCreationDto.getUserId() + ")"));
         }
-        Theme theme = Theme.builder(themeDto.getReference()).user(user).category(themeDto.getCategory()).build();
+        Theme theme = Theme.builder(themeCreationDto.getReference()).user(user).category(themeCreationDto.getCategory()).build();
         DaoFactory.getFactory().themeDao().save(theme);
         return theme.getId();
     }

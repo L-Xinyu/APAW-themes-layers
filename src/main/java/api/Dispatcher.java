@@ -5,7 +5,7 @@ import api.apiControllers.ThemeApiController;
 import api.apiControllers.UserApiController;
 import api.daos.DaoFactory;
 import api.daos.memory.DaoMemoryFactory;
-import api.dtos.ThemeDto;
+import api.dtos.ThemeCreationDto;
 import api.dtos.UserDto;
 import api.dtos.SuggestionDto;
 import api.entities.Category;
@@ -71,7 +71,7 @@ public class Dispatcher {
         } else if (request.isEqualsPath(SuggestionApiController.SUGGESTIONS)) {
             this.suggestionApiController.create((SuggestionDto) request.getBody());
         } else if (request.isEqualsPath(ThemeApiController.THEMES)) {
-            response.setBody(this.themeApiController.create((ThemeDto) request.getBody()));
+            response.setBody(this.themeApiController.create((ThemeCreationDto) request.getBody()));
         } else if (request.isEqualsPath(ThemeApiController.THEMES + ThemeApiController.ID_ID + ThemeApiController.VOTES)) {
             this.themeApiController.createVote(request.getPath(1), (Integer) request.getBody());
         } else {

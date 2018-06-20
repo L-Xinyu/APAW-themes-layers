@@ -2,7 +2,7 @@ package api.dtos;
 
 import api.entities.Category;
 
-public class ThemeDto {
+public class ThemeCreationDto {
 
     private String reference;
 
@@ -10,7 +10,7 @@ public class ThemeDto {
 
     private String userId;
 
-    public ThemeDto(String reference, Category category, String userId) {
+    public ThemeCreationDto(String reference, Category category, String userId) {
         this.reference = reference;
         this.category = category;
         this.userId = userId;
@@ -42,7 +42,7 @@ public class ThemeDto {
 
     @Override
     public String toString() {
-        return "ThemeDto{" +
+        return "ThemeCreationDto{" +
                 "reference='" + reference + '\'' +
                 ", category=" + category +
                 ", userId='" + userId + '\'' +

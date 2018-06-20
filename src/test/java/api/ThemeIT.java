@@ -2,7 +2,7 @@ package api;
 
 import api.apiControllers.ThemeApiController;
 import api.apiControllers.UserApiController;
-import api.dtos.ThemeDto;
+import api.dtos.ThemeCreationDto;
 import api.dtos.ThemeIdReferenceDto;
 import api.dtos.UserDto;
 import api.entities.Category;
@@ -26,7 +26,7 @@ class ThemeIT {
     private String createTheme(String theme) {
         String userId = this.createUser();
         HttpRequest request = HttpRequest.builder(ThemeApiController.THEMES)
-                .body(new ThemeDto(theme, Category.SPORT, userId)).post();
+                .body(new ThemeCreationDto(theme, Category.SPORT, userId)).post();
         return (String) new Client().submit(request).getBody();
     }
 
@@ -38,7 +38,7 @@ class ThemeIT {
     @Test
     void testCreateThemeUserIdNotFound() {
         HttpRequest request = HttpRequest.builder(ThemeApiController.THEMES)
-                .body(new ThemeDto("Theme one", Category.SPORT, "h3rFdEsw")).post();
+                .body(new ThemeCreationDto("Theme one", Category.SPORT, "h3rFdEsw")).post();
         HttpException exception = assertThrows(HttpException.class, () -> new Client().submit(request));
         assertEquals(HttpStatus.NOT_FOUND, exception.getHttpStatus());
     }
@@ -46,7 +46,7 @@ class ThemeIT {
     @Test
     void testCreateThemeWithoutCategoryUser() {
         HttpRequest request = HttpRequest.builder(ThemeApiController.THEMES)
-                .body(new ThemeDto("Theme one", null, null)).post();
+                .body(new ThemeCreationDto("Theme one", null, null)).post();
         new Client().submit(request);
     }
 
