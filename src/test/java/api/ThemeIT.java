@@ -25,19 +25,19 @@ class ThemeIT {
 
     private String createTheme(String theme) {
         String userId = this.createUser();
-        HttpRequest request = HttpRequest.builder().path(ThemeApiController.THEMES)
+        HttpRequest request = HttpRequest.builder(ThemeApiController.THEMES)
                 .body(new ThemeDto(theme, Category.SPORT, userId)).post();
         return (String) new Client().submit(request).getBody();
     }
 
     private String createUser() {
-        HttpRequest request = HttpRequest.builder().path(UserApiController.USERS).body(new UserDto("uno")).post();
+        HttpRequest request = HttpRequest.builder(UserApiController.USERS).body(new UserDto("uno")).post();
         return (String) new Client().submit(request).getBody();
     }
 
     @Test
     void testCreateThemeUserIdNotFound() {
-        HttpRequest request = HttpRequest.builder().path(ThemeApiController.THEMES)
+        HttpRequest request = HttpRequest.builder(ThemeApiController.THEMES)
                 .body(new ThemeDto("Theme one", Category.SPORT, "h3rFdEsw")).post();
         HttpException exception = assertThrows(HttpException.class, () -> new Client().submit(request));
         assertEquals(HttpStatus.NOT_FOUND, exception.getHttpStatus());
@@ -45,7 +45,7 @@ class ThemeIT {
 
     @Test
     void testCreateThemeWithoutCategoryUser() {
-        HttpRequest request = HttpRequest.builder().path(ThemeApiController.THEMES)
+        HttpRequest request = HttpRequest.builder(ThemeApiController.THEMES)
                 .body(new ThemeDto("Theme one", null, null)).post();
         new Client().submit(request);
     }
@@ -55,7 +55,7 @@ class ThemeIT {
         for (int i = 0; i < 5; i++) {
             this.createTheme("theme" + i);
         }
-        HttpRequest request = HttpRequest.builder().path(ThemeApiController.THEMES).get();
+        HttpRequest request = HttpRequest.builder(ThemeApiController.THEMES).get();
         List<ThemeIdReferenceDto> themes = (List<ThemeIdReferenceDto>) new Client().submit(request).getBody();
         assertTrue(themes.size() >= 5);
     }
@@ -63,9 +63,9 @@ class ThemeIT {
     @Test
     void testDelete() {
         String id = this.createTheme("uno");
-        HttpRequest request1 = HttpRequest.builder().path(ThemeApiController.THEMES).get();
+        HttpRequest request1 = HttpRequest.builder(ThemeApiController.THEMES).get();
         int count = ((List<ThemeIdReferenceDto>) new Client().submit(request1).getBody()).size();
-        HttpRequest request2 = HttpRequest.builder().path(ThemeApiController.THEMES).path(UserApiController.ID_ID)
+        HttpRequest request2 = HttpRequest.builder(ThemeApiController.THEMES).path(UserApiController.ID_ID)
                 .expandPath(id).delete();
         new Client().submit(request2);
         assertTrue(((List<ThemeIdReferenceDto>) new Client().submit(request1).getBody()).size() < count);
@@ -78,7 +78,7 @@ class ThemeIT {
     }
 
     private void voteTheme(String themeId, Integer vote) {
-        HttpRequest request = HttpRequest.builder().path(ThemeApiController.THEMES).path(ThemeApiController.ID_ID)
+        HttpRequest request = HttpRequest.builder(ThemeApiController.THEMES).path(ThemeApiController.ID_ID)
                 .expandPath(themeId).path(ThemeApiController.VOTES).body(vote).post();
         new Client().submit(request);
     }
@@ -94,7 +94,7 @@ class ThemeIT {
         String id = this.createTheme("uno");
         this.voteTheme(id, 5);
         this.voteTheme(id, 10);
-        HttpRequest request = HttpRequest.builder().path(ThemeApiController.THEMES).path(ThemeApiController.ID_ID)
+        HttpRequest request = HttpRequest.builder(ThemeApiController.THEMES).path(ThemeApiController.ID_ID)
                 .expandPath(id).path(ThemeApiController.AVERAGE).get();
         assertEquals(7.5, ((Double) new Client().submit(request).getBody()), 10e-5);
     }
@@ -102,7 +102,7 @@ class ThemeIT {
     @Test
     void testUpdateCategory() {
         String id = this.createTheme("uno");
-        HttpRequest request = HttpRequest.builder().path(ThemeApiController.THEMES).path(ThemeApiController.ID_ID)
+        HttpRequest request = HttpRequest.builder(ThemeApiController.THEMES).path(ThemeApiController.ID_ID)
                 .expandPath(id).path(ThemeApiController.CATEGORY).body(Category.LEISURE_TIME).patch();
         new Client().submit(request);
     }
@@ -112,7 +112,7 @@ class ThemeIT {
         String id = this.createTheme("uno");
         this.voteTheme(id, 5);
         this.voteTheme(id, 10);
-        HttpRequest request = HttpRequest.builder().path(ThemeApiController.THEMES).path(ThemeApiController.SEARCH)
+        HttpRequest request = HttpRequest.builder(ThemeApiController.THEMES).path(ThemeApiController.SEARCH)
                 .param("q", "average:>=7").get();
         List<ThemeIdReferenceDto> themes = (List<ThemeIdReferenceDto>) new Client().submit(request).getBody();
        assertFalse(themes.isEmpty());
@@ -123,7 +123,7 @@ class ThemeIT {
         String id = this.createTheme("uno");
         this.voteTheme(id, 5);
         this.voteTheme(id, 10);
-        HttpRequest request = HttpRequest.builder().path(ThemeApiController.THEMES).path(ThemeApiController.SEARCH)
+        HttpRequest request = HttpRequest.builder(ThemeApiController.THEMES).path(ThemeApiController.SEARCH)
                 .param("error", "average:>=7").get();
         HttpException exception = assertThrows(HttpException.class, () -> new Client().submit(request));
         assertEquals(HttpStatus.BAD_REQUEST, exception.getHttpStatus());
@@ -134,7 +134,7 @@ class ThemeIT {
         String id = this.createTheme("uno");
         this.voteTheme(id, 5);
         this.voteTheme(id, 10);
-        HttpRequest request = HttpRequest.builder().path(ThemeApiController.THEMES).path(ThemeApiController.SEARCH)
+        HttpRequest request = HttpRequest.builder(ThemeApiController.THEMES).path(ThemeApiController.SEARCH)
                 .param("error", "error:>=7").get();
         HttpException exception = assertThrows(HttpException.class, () -> new Client().submit(request));
         assertEquals(HttpStatus.BAD_REQUEST, exception.getHttpStatus());
