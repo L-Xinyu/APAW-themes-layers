@@ -15,13 +15,11 @@ import api.exceptions.RequestInvalidException;
 import http.HttpRequest;
 import http.HttpResponse;
 import http.HttpStatus;
-import org.apache.logging.log4j.LogManager;
 
 public class Dispatcher {
 
     static {
         DaoFactory.setFactory(new DaoMemoryFactory());
-        LogManager.getLogger(Dispatcher.class).debug("   create DaoMemoryFactory");
     }
 
     private UserApiController userApiController = new UserApiController();
@@ -75,7 +73,7 @@ public class Dispatcher {
         } else if (request.isEqualsPath(ThemeApiController.THEMES + ThemeApiController.ID_ID + ThemeApiController.VOTES)) {
             this.themeApiController.createVote(request.getPath(1), (Integer) request.getBody());
         } else {
-            throw new RequestInvalidException("method error: " + request.getMethod() + ' ' + request.getPath());
+            throw new RequestInvalidException("request error: " + request.getMethod() + ' ' + request.getPath());
         }
     }
 
@@ -87,7 +85,7 @@ public class Dispatcher {
         } else if (request.isEqualsPath(ThemeApiController.THEMES + ThemeApiController.SEARCH)) {
             response.setBody(this.themeApiController.find(request.getParams().get("q")));
         } else {
-            throw new RequestInvalidException("method error: " + request.getMethod() + ' ' + request.getPath());
+            throw new RequestInvalidException("request error: " + request.getMethod() + ' ' + request.getPath());
         }
     }
 
