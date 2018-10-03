@@ -7,9 +7,7 @@ import api.entities.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 class ThemeBusinessControllerIT {
 
@@ -17,7 +15,7 @@ class ThemeBusinessControllerIT {
     private Theme theme;
 
     @BeforeEach
-    void prepare(){
+    void prepare() {
         DaoFactory.setFactory(new DaoMemoryFactory());
         this.themeBusinessController = new ThemeBusinessController();
         User user = new User("nick", null);

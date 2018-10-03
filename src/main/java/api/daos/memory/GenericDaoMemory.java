@@ -1,9 +1,9 @@
 package api.daos.memory;
 
-import java.util.*;
-
 import api.daos.GenericDao;
 import org.apache.logging.log4j.LogManager;
+
+import java.util.*;
 
 public abstract class GenericDaoMemory<T> implements GenericDao<T, String> {
 

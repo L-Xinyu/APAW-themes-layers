@@ -1,11 +1,8 @@
 package api.daos.memory;
 
-import api.daos.DaoFactory;
 import api.daos.ThemeDao;
-import api.dtos.ThemeIdReferenceDto;
 import api.entities.Theme;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 

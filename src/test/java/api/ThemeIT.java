@@ -115,7 +115,7 @@ class ThemeIT {
         HttpRequest request = HttpRequest.builder(ThemeApiController.THEMES).path(ThemeApiController.SEARCH)
                 .param("q", "average:>=7").get();
         List<ThemeIdReferenceDto> themes = (List<ThemeIdReferenceDto>) new Client().submit(request).getBody();
-       assertFalse(themes.isEmpty());
+        assertFalse(themes.isEmpty());
     }
 
     @Test

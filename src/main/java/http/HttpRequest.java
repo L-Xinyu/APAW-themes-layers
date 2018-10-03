@@ -95,7 +95,7 @@ public class HttpRequest extends HttpBase {
 
         private Builder(String path) {
             this.httpRequest = new HttpRequest();
-            this.httpRequest.path=path;
+            this.httpRequest.path = path;
         }
 
         public Builder path(String path) {

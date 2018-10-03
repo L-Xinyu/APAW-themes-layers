@@ -1,8 +1,8 @@
 package api.businessController;
 
 import api.daos.DaoFactory;
-import api.entities.Suggestion;
 import api.dtos.SuggestionDto;
+import api.entities.Suggestion;
 
 public class SuggestionBusinessController {
 

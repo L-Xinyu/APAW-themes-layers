@@ -3,8 +3,6 @@ package api.daos.memory;
 import api.daos.SuggestionDao;
 import api.entities.Suggestion;
 
-import java.util.HashMap;
-
 public class SuggestionDaoMemory extends GenericDaoMemory<Suggestion> implements SuggestionDao {
 
     @Override
