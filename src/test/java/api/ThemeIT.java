@@ -31,7 +31,7 @@ class ThemeIT {
     }
 
     private String createUser() {
-        HttpRequest request = HttpRequest.builder(UserApiController.USERS).body(new UserDto("uno")).post();
+        HttpRequest request = HttpRequest.builder(UserApiController.USERS).body(new UserDto("uno","uno@email")).post();
         return (String) new Client().submit(request).getBody();
     }
 

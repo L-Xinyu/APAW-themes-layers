@@ -8,7 +8,7 @@ import api.exceptions.NotFoundException;
 public class UserBusinessController {
 
     public String create(UserDto userDto) {
-        User user = new User(userDto.getNick(), null);
+        User user = new User(userDto.getNick(), userDto.getEmail());
         DaoFactory.getFactory().getUserDao().save(user);
         return user.getId();
     }

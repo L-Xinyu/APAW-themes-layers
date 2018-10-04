@@ -6,8 +6,13 @@ public class UserDto {
 
     private String email;
 
-    public UserDto(String nick) {
+    public UserDto(String nick, String email) {
         this.nick = nick;
+        this.email = email;
+    }
+
+    public UserDto(String nick) {
+        this(nick,null);
     }
 
     public String getNick() {
