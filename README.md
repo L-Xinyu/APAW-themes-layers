@@ -11,10 +11,10 @@
 * GitHub
 
 ## Diseño de entidades
-![themes-entities-class-diagram](https://github.com/miw-upm/APAW-themes-layers/blob/develop/docs/themes-architecture-diagram.png)
+![themes-architecture-diagram](https://github.com/miw-upm/APAW-themes-layers/blob/develop/docs/themes-entities-class-diagram.png)
 
 ## Arquitectura
-![themes-architecture-diagram](https://github.com/miw-upm/APAW-themes-layers/blob/develop/docs/themes-entities-class-diagram.png)
+![themes-entities-class-diagram](https://github.com/miw-upm/APAW-themes-layers/blob/develop/docs/themes-architecture-diagram.png)
 
 ### Responsabilidades
 #### Dispatcher
