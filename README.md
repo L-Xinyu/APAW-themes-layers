@@ -65,7 +65,7 @@
 #### Parámetros del cuerpo
 - `reference`: String (**requerido**)
 - `category`: Category
-- `userId`: String
+- `userId`: String (**requerido**)
 #### Respuesta
 - 200 OK 
   - `id`: String
